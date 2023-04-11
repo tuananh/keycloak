@@ -43,20 +43,11 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ github.token }}
       
-      # - name: Build hello package
-      #   uses: chainguard-dev/actions/melange-build-pkg@main
-      #   with:
-      #     config: hello.melange.yaml
-      #     sign-with-key: true
-      #     signing-key-path: ${{ github.workspace }}/melange.rsa
-      #     archs: x86_64,aarch64
-
       - uses: chainguard-images/actions/apko-publish@6e9cfac3c961818d9c5ce339a9c559cc0c2e5464
         id: apko
         with:
           config: latest.apko.yaml
           tag: ghcr.io/${{ github.repository }}:latest
-          # keyring-append: /github/workspace/melange.rsa.pub
           source-date-epoch: ${{ steps.snapshot-date.outputs.epoch }}
 
       - shell: bash
