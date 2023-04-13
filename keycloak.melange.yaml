@@ -33,11 +33,17 @@ environment:
       - wolfi-baselayout
 
 pipeline:
-  - uses: git-checkout
+  # - uses: git-checkout
+  #   with:
+  #     repository: https://github.com/keycloak/keycloak
+  #     tag: ${{package.version}}
+  #     expected-commit: b9a56a7d3551b585a852c38beff92e9a99c30394
+  
+  # do we need git-checkout? otherwise fetch should be faster
+  - uses: fetch
     with:
-      repository: https://github.com/keycloak/keycloak
-      tag: ${{package.version}}
-      expected-commit: b9a56a7d3551b585a852c38beff92e9a99c30394
+      uri: https://github.com/keycloak/keycloak/archive/refs/tags/${{package.version}}.tar.gz
+      expected-sha256: 18fb80f044b82c467ec36f11851dafff3d8183f7527b3865ad22a69f797c896e
   - runs: |
       export LANG=en_US.UTF-8
       export JAVA_HOME=/usr/lib/jvm/openjdk
